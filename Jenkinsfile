@@ -2,7 +2,7 @@ pipeline {
     agent any  // Runs on any available Jenkins agent
 
     environment {
-        GIT_REPO = 'https://github.com/your-repo-name.git'  // Replace with your repo URL
+        GIT_REPO = 'https://github.com/mrjohn141/DevopsJenkins.git'  // Replace with your repo URL
         BRANCH = 'main'  // Change if using a different branch
     }
 
