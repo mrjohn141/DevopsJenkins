@@ -1,47 +1,24 @@
 pipeline {
-    agent any  // Runs on any available Jenkins agent
-
-    environment {
-        GIT_REPO = 'https://github.com/mrjohn141/DevopsJenkins.git'  // Replace with your repo URL
-        BRANCH = 'main'  // Change if using a different branch
-    }
+    agent any
 
     stages {
         stage('Clone Repository') {
             steps {
-                git branch: "${BRANCH}", url: "${GIT_REPO}"
+                git 'https://github.com/mrjohn141/DevopsJenkins.git'
             }
         }
 
-        stage('Build') {
+        stage('Run Script') {
             steps {
-                echo 'Building the project...'
-                sh 'chmod +x build.sh'  // Ensure the build script is executable
-                sh './build.sh'  // Run a build script (Replace with actual build command)
+                sh 'chmod +x script.sh'
+                sh './script.sh 5'
             }
         }
 
-        stage('Run Tests') {
+        stage('Archive Output') {
             steps {
-                echo 'Running tests...'
-                sh './test.sh'  // Assuming you have a test script
+                archiveArtifacts artifacts: 'output.html', fingerprint: true
             }
-        }
-
-        stage('Deploy') {
-            steps {
-                echo 'Deploying application...'
-                sh './deploy.sh'  // Replace with your deployment script
-            }
-        }
-    }
-
-    post {
-        success {
-            echo 'Pipeline completed successfully! ✅'
-        }
-        failure {
-            echo 'Pipeline failed! ❌'
         }
     }
 }
